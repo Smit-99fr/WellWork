@@ -3,7 +3,7 @@ from rest_framework import serializers
 # from .models import User
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Profile
+from .models import Profile,Team 
 
 # class ProfileSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -11,17 +11,10 @@ from .models import Profile
 #         fields = ['id', 'image']
 
 class ProfileSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ['user', 'image', 'image_url']  # Include the custom field
-
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
-            return request.build_absolute_uri(obj.image.url)
-        return None
+        fields = ['user', 'image','is_team_leader']  # Include the custom fields  
 
 
 # User Serializer
@@ -31,6 +24,29 @@ class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ('id', 'username', 'email','profile')
+    read_only_fields = ['created_by'] 
+
+#Team serializer
+class TeamSerializer(serializers.ModelSerializer):
+    members = UserSerializer(many=True, read_only=True)  # Use the UserSerializer to display full user objects
+
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'created_by', 'created_at', 'description', 'members']
+        read_only_fields = ['created_by']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        if not request or not request.user:
+            raise serializers.ValidationError("User not authenticated.")
+
+        # Automatically set 'created_by' and add the creator to the team members
+        team = Team.objects.create(created_by=request.user, **validated_data)
+        user_profile = request.user.profile
+        team.add_member(user_profile, leader=True)  # Add the creator to the team by default
+        return team
+
+
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User

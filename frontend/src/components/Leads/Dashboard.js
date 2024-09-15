@@ -1,17 +1,32 @@
 import React, { Fragment } from 'react'
-import Form from './Form'
-import Leads from './Leads'
-import { useSelector } from 'react-redux';
-import { NavLink, Navigate } from 'react-router-dom';
+
 
 
 function Dashboard() {
+  // const handleReinitialize = () => {
+  //   // Call the function to reinitialize persistor
+  //   reinitializePersistor();
+  // };
+  // const handlePurge = () => {
+  //   localStorage.removeItem('persist:root');
+  // };
+
   return (
     <Fragment>
 
       {/* <Form />
       <Leads /> */}
-      <h1>you are logged in</h1>
+      <center>
+        <h1>Dashboard</h1>
+        <br /><br />
+        {/* <button onClick={openTeam}>View Team Details</button> */}
+      </center>
+      {/* <div>
+        <button onClick={handlePurge}>Purge Persisted State</button>
+      </div>
+      <div>
+        <button onClick={handleReinitialize}>re Persisted State</button>
+      </div> */}
 
     </Fragment>
   )

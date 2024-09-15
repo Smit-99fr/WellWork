@@ -1,4 +1,4 @@
-import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL } from "../actions/types";
+import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, CHANGE_TEAM_LEADER } from "../actions/types";
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -43,6 +43,19 @@ export default function (state = initialState, action) {
                 isAuthenticated: false,
                 isLoading: false
             }
+        case CHANGE_TEAM_LEADER:
+            console.log('user leader');
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    profile: {
+                        ...state.user.profile,
+                        is_team_leader: true, // Correctly set is_team_leader to true
+                    },
+                },
+            };
+
         default:
             return state;
     }

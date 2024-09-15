@@ -3,16 +3,18 @@ from rest_framework.routers import DefaultRouter
 
 from django.conf import settings
 from django.conf.urls.static import static
-# from .views import UserViewSet
+from .views import TeamViewSet
 from .api import RegisterAPI,LoginAPI,UserAPI
 from knox.views import LogoutView
 
 # router = DefaultRouter()
 # router.register(r'users', UserViewSet)
 #router.register(r'teams', TeamViewSet)
+router = DefaultRouter()
+router.register(r'teams', TeamViewSet)
 
 urlpatterns = [
-    # path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('api/auth',include('knox.urls')),
     path('api/auth/register',RegisterAPI.as_view()),
     path('api/auth/login',LoginAPI.as_view()),

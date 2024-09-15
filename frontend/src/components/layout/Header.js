@@ -13,6 +13,10 @@ const Header = () => {
       <span className='navbar-text mr-3'>
         <strong>{user ? <NavLink to={'/profile-page'} className="nav-link">Welcome {user.username}</NavLink> : ""}</strong>
       </span>
+      <span className='navbar-text mr-3'>
+        {user ? <NavLink to={'/team-page'} className="nav-link">Team Details</NavLink> : ""}
+      </span>
+
       <li className="nav-item">
         <button className='nav-link btn btn-info btn-sm text-dark'
           onClick={() => {

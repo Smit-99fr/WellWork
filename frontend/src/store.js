@@ -26,7 +26,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const persistConfig = {
     key: 'root',
     storage, // Use localStorage
-    whitelist: ['auth'], // List of reducers to persist, like 'auth'
+    whitelist: ['auth', 'teamReducer'], // List of reducers to persist, like 'auth'
 };
 
 // Create a persisted reducer
@@ -41,6 +41,13 @@ const store = createStore(
 // Create a persistor
 const persistor = persistStore(store);
 
-export { store, persistor };
+// Function to reinitialize persistor
+const reinitializePersistor = () => {
+    persistor.pause();       // Pause the current persistor
+    persistor = persistStore(store);  // Reinitialize the persistor
+    console.log('Persistor reinitialized');
+};
+
+export { store, persistor, reinitializePersistor };
 
 

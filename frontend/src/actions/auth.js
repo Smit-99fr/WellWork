@@ -102,7 +102,7 @@ export const logout = () => (dispatch, getState) => {
 export const tokenConfig = (getState) => {
     // Get token from state
     const token = getState().auth.token;
-
+    console.log(token)
     // Set headers
     const config = {
         headers: {

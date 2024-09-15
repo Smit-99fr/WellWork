@@ -9,7 +9,7 @@ const PrivateRoute = ({ element: Element }) => {
     if (auth.isLoading) {
         return <h2>Loading...</h2>;
     }
-
+    console.log('Private route called') //dev testing log
     return auth.isAuthenticated ? <Element /> : <Navigate to="/login" />;
 };
 

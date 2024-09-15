@@ -8,24 +8,13 @@ import { loadUser } from '../../actions/auth';
 const ProfilePage = () => {
     const { isAuthenticated, user } = useSelector((state) => (state.auth));
     const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(loadUser());
-    // }, []);
-
-
-    if (!isAuthenticated) {
-        <Navigate to={'/'} />
-    }
-
     return (
-
-
         <div style={styles.container}>
             <div style={styles.profileCard}>
-                <img src={user.profile.image_url} alt="Profile" style={styles.profileImage} />
+                <img src={user.profile.image} alt="Profile" style={styles.profileImage} />
                 <h2 style={styles.name}>{user.username}</h2>
                 <p style={styles.email}>email: {user.email}</p>
+                {/* <button onClick={openTeam}>View Team Details</button> */}
             </div>
         </div>
     );

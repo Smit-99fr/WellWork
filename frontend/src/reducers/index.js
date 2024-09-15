@@ -3,11 +3,12 @@ import leads from './leads';
 import errors from "./errors";
 import auth from './auth';
 import messages from "./messages";
+import teamReducer from "./team";
 
 
 export default combineReducers({
-    leads,
     errors,
     auth,
     messages,
+    teamReducer
 });
