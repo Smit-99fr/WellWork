@@ -9,12 +9,18 @@ from .models import Profile,Team
 #     class Meta:
 #         model = Profile
 #         fields = ['id', 'image']
+class SimpleTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'description']
 
 class ProfileSerializer(serializers.ModelSerializer):
+    team = SimpleTeamSerializer()  # Use SimpleTeamSerializer to prevent recursion
 
     class Meta:
         model = Profile
-        fields = ['user', 'image','is_team_leader']  # Include the custom fields  
+        fields = ['user', 'image', 'team', 'is_team_leader']
+ 
 
 
 # User Serializer
@@ -45,34 +51,6 @@ class TeamSerializer(serializers.ModelSerializer):
         user_profile = request.user.profile
         team.add_member(user_profile, leader=True)  # Add the creator to the team by default
         return team
-
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['id', 'username', 'email', 'profile_pic', 'team_leader']
-#         read_only_fields = ['team_leader']
-
-# class TeamSerializer(serializers.ModelSerializer):
-#     team_leader = serializers.StringRelatedField()
-#     members = serializers.StringRelatedField(many=True)
-
-#     class Meta:
-#         model = Team
-#         fields = ['id', 'name', 'team_token', 'team_leader', 'members']
-#         read_only_fields = ['team_token', 'team_leader', 'members']
-    
-#     def create(self, validated_data):
-#         user = self.context['request'].user
-#         team = Team.objects.create(
-#             name=validated_data['name'],
-#             team_leader=user
-#         )
-#         team.members.add(user)
-#         user.team_leader = True
-#         user.save()
-#         return team
-
     
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'knox',
     'rest_framework',
     'users',
+    'tasks',
     'frontend',
 ]
 
